@@ -2,14 +2,15 @@
 
 ## 1.0.0 — 2026-06-26
 
-Рабочая версия проекта.
+Working version.
 
-Изменения:
+Changes:
 
-- Актуализирована архитектура под модель Google Sheets
-- Добавлена инструкция по развёртыванию `docs/DEPLOYMENT.md`
-- Добавлена инструкция по использованию `docs/USAGE.md`
-- Добавлен мастер-промт `docs/MASTER_PROMPT.md`
-- Обновлён `README.md`
-- Удалены устаревшие Markdown-шаблоны личных файлов и отчётов
-- Зафиксирована модель из четырёх таблиц: три личные таблицы и одна семейная таблица
+- Updated the architecture for the Google Sheets-based data model
+- Added English deployment guide: `docs/DEPLOYMENT.md`
+- Added Russian deployment guide: `docs/ru/DEPLOYMENT.md`
+- Added usage guide: `docs/USAGE.md`
+- Added ChatGPT project prompt: `docs/MASTER_PROMPT.md`
+- Updated `README.md`
+- Removed obsolete Markdown templates for personal files and reports
+- Fixed the four-spreadsheet model: three personal tables and one family coordination table
