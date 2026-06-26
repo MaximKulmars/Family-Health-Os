@@ -1,137 +1,117 @@
-# Health OS
+# Family Health OS
 
-> Version: 1.0.0-rc1  
-> Status: Release Candidate  
-> Document Type: Project Overview  
-> Layer: System Layer  
-> Last Updated: 2026-06-26
+> Версия: 1.0.0  
+> Статус: рабочая версия  
+> Язык проекта: русский
 
-## Purpose
+**Family Health OS** — семейная система мониторинга здоровья и поддержки решений на базе ChatGPT, Google Sheets и публичных спецификаций в GitHub.
 
-Health OS is a family health decision-support system.
+Проект помогает:
 
-The project helps a family collect health-related data, analyze patterns, make safer and more practical decisions, and prepare for medical consultations when they are actually needed.
+- вести структурированные данные о здоровье членов семьи;
+- отслеживать питание, активность, сон, симптомы, лекарства, БАДы и анализы;
+- готовить ежедневные, недельные и месячные разборы;
+- фиксировать решения и причины этих решений;
+- отделять факты от гипотез;
+- принимать более объяснимые и практически выполнимые решения.
 
-Health OS is not a medical record system, not a diagnostic tool, and not a replacement for physicians. It is a structured framework for decision support, long-term monitoring, and practical health management.
+Проект не заменяет врача, не ставит диагнозы и не предназначен для назначения рецептурного лечения.
 
-## Core Idea
+---
 
-Health OS works by combining:
+## Архитектура хранения
 
-- User-provided data
-- Family context
-- Long-term observations
-- Current scientific evidence
-- Practical constraints
-- Decision history
+Проект разделён на две части.
 
-The system is designed to reduce chaos, preserve context, and make health-related decisions more explicit and traceable.
+### 1. GitHub
 
-## Main Goals
+В GitHub хранятся только публичные системные материалы:
 
-Health OS helps the family:
+- архитектура;
+- спецификации;
+- инструкции по развёртыванию;
+- инструкции по использованию;
+- мастер-промт;
+- документация проекта.
 
-- Maintain health over the long term
-- Reduce avoidable health risks
-- Improve nutrition, activity, sleep, energy, and productivity
-- Track symptoms, analyses, examinations, and medical events
-- Reduce unnecessary visits to doctors when safe alternatives exist
-- Prepare better for medical consultations when they are necessary
-- Make recommendations practical for the family’s real living conditions
+В GitHub нельзя хранить персональные и медицинские данные.
 
-## What Health OS Does Not Do
+### 2. Google Sheets
 
-Health OS does not:
+Google Sheets используются как рабочая база данных.
 
-- Diagnose diseases
-- Replace medical professionals
-- Prescribe prescription medication
-- Store static medical knowledge that may become outdated
-- Ignore symptoms that require medical evaluation
-- Mix data between family members
+Базовая модель предполагает четыре таблицы:
 
-## Storage Model
+- `Maxim_health` — личная таблица Максима;
+- `Anya_health` — личная таблица Ани;
+- `Bella_health` — личная таблица Беллы;
+- `Family_health` — семейная координационная таблица.
 
-Health OS uses two layers.
+Личные таблицы содержат подробные персональные данные.  
+`Family_health` содержит только общие задачи, статусы, ближайшие проверки, семейные решения и ссылки на личные таблицы.
 
-### System Layer
+---
 
-Storage: GitHub
+## Основные документы
 
-Contains reusable, non-personal project files:
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — архитектура системы
+- [`docs/CORE_PRINCIPLES.md`](docs/CORE_PRINCIPLES.md) — базовые принципы
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — развёртывание проекта
+- [`docs/USAGE.md`](docs/USAGE.md) — ежедневное использование
+- [`docs/MASTER_PROMPT.md`](docs/MASTER_PROMPT.md) — короткая инструкция для ChatGPT-проекта
 
-- README.md
-- ARCHITECTURE.md
-- CORE_PRINCIPLES.md
-- SYSTEM.md
-- WORKFLOW.md
-- CHANGELOG.md
-- templates/
-- examples/
+---
 
-This layer must not contain private medical or identifying data.
+## Быстрый старт
 
-### Family Data Layer
+1. Создайте четыре Google Sheets:
+   - `Maxim_health`
+   - `Anya_health`
+   - `Bella_health`
+   - `Family_health`
 
-Storage: Google Drive
+2. Разверните структуру вкладок по инструкции из `docs/DEPLOYMENT.md`.
 
-Contains private family data:
+3. Добавьте `docs/MASTER_PROMPT.md` в инструкции ChatGPT-проекта.
 
-- FAMILY_PROFILE.md
-- Member profiles
-- Baselines
-- Goals
-- Medical histories
-- Decision logs
-- Reports
-- Analyses
-- Measurements
-- Exports
-
-This layer is private and must not be committed to GitHub.
-
-## Identity Rule
-
-Every new chat must begin with identification.
-
-Examples:
+4. В начале каждого нового чата указывайте, кто пишет:
 
 ```text
 Я: Максим
 ```
 
-```text
-Я: Аня
-```
+Если данные относятся к другому члену семьи:
 
 ```text
 Я: Максим
 Данные о: Белла
 ```
 
-If identity is unclear, the assistant must ask who is speaking and whose data is being discussed before making conclusions or recording information.
+5. Присылайте данные в течение дня: еду, активность, сон, симптомы, лекарства, БАДы, анализы и вопросы.
 
-## Daily Workflow
+---
 
-During the day, a family member may send:
+## Принцип работы
 
-- Food photos and descriptions
-- Physical activity
-- Sleep data
-- Symptoms and complaints
-- Mood, energy, and productivity notes
-- Medicines and supplements
-- Measurements
-- Medical documents
+Главный цикл системы:
 
-At the end of the day, the assistant prepares a structured summary.
+```text
+Данные → интерпретация → гипотеза → решение → рекомендация
+```
 
-## Weekly and Monthly Workflow
+Health OS не должен быть генератором случайных советов. Каждая рекомендация должна быть связана с данными, а каждое решение должно быть понятно через несколько месяцев.
 
-Weekly reports focus on patterns, adherence, problems, and next steps.
+---
 
-Monthly reports focus on long-term trends, medical risks, goals, and decision effectiveness.
+## Приватность
 
-## Documentation Status
+Персональные данные не должны попадать в GitHub.
 
-This README belongs to the System Layer and is safe to publish publicly.
+В репозитории допустимы только:
+
+- пустые схемы;
+- обезличенные примеры;
+- инструкции;
+- спецификации;
+- документация.
+
