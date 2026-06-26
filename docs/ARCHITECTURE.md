@@ -1,267 +1,260 @@
 # ARCHITECTURE.md
 
-> Version: 1.1.0-rc1  
-> Status: Release Candidate  
-> Document Type: Architecture Specification  
-> Layer: System Layer  
-> Last Updated: 2026-06-26
+> Версия: 1.0.0  
+> Статус: рабочая версия  
+> Тип документа: архитектурная спецификация  
+> Язык проекта: русский
 
-## Purpose
+---
 
-This document defines the architecture of Health OS: storage layers, document responsibilities, privacy boundaries, data lifecycle, and project structure.
+## Назначение
 
-It does not contain personal or medical data.
+Этот документ описывает архитектуру **Family Health OS**: роли GitHub, Google Sheets, личных таблиц, семейной таблицы, правила приватности и общий жизненный цикл данных.
 
-## Scope
+---
 
-This specification covers:
+## Общая модель
 
-- System Layer
-- Family Data Layer
-- Family/member data separation
-- Privacy boundary
-- Identity rule
-- Document responsibilities
-- Data lifecycle
-- External knowledge policy
-- Practical feasibility policy
+Family Health OS состоит из двух основных уровней.
 
-## Storage Model
+```text
+GitHub
+  ↓
+Системные спецификации, инструкции, шаблоны, правила
 
-Health OS uses a two-layer storage model.
+Google Sheets
+  ↓
+Оперативные данные, аналитика, задачи, решения, отчёты
+```
+
+GitHub отвечает за устройство системы.  
+Google Sheets отвечают за реальные данные и ежедневную работу.
+
+---
 
 ## 1. System Layer
 
-Storage: GitHub
+**Хранилище:** GitHub  
+**Репозиторий:** https://github.com/MaximKulmars/Family-Health-Os
 
-The System Layer contains reusable non-personal files.
+В этом слое хранятся:
 
-```text
-health-os/
-├── README.md
-├── ARCHITECTURE.md
-├── CORE_PRINCIPLES.md
-├── SYSTEM.md
-├── WORKFLOW.md
-├── CHANGELOG.md
-├── templates/
-└── examples/
-```
+- архитектура проекта;
+- базовые принципы;
+- инструкции по развёртыванию;
+- инструкции по использованию;
+- мастер-промт для ChatGPT-проекта;
+- публичная документация.
 
-Allowed content:
+В этом слое запрещено хранить:
 
-- Project architecture
-- Core principles
-- Assistant behavior rules
-- Workflow descriptions
-- Report templates
-- Anonymized examples
-- Changelog
+- персональные медицинские данные;
+- реальные анализы;
+- симптомы членов семьи;
+- даты рождения;
+- адреса;
+- личные решения по лечению;
+- фотографии;
+- документы обследований;
+- любые данные, по которым можно идентифицировать человека.
 
-Forbidden content:
+---
 
-- Names of family members
-- Dates of birth
-- Addresses or precise location details
-- Real medical results
-- Symptoms and complaints
-- Medicines and supplements used by the family
-- Photos
-- Lab documents
-- Any identifying or private health data
+## 2. Personal Data Layer
 
-## 2. Family Data Layer
+**Хранилище:** Google Sheets  
+**Назначение:** личные медицинские и поведенческие данные каждого члена семьи.
 
-Storage: Google Drive
+Используются отдельные личные таблицы:
 
-The Family Data Layer contains private family information.
+- `Maxim_health`
+- `Anya_health`
+- `Bella_health`
 
-```text
-Health OS/
-├── FAMILY_PROFILE.md
-├── shared/
-│   ├── FAMILY_DECISIONS.md
-│   ├── FAMILY_MEDICAL_HISTORY.md
-│   └── MEDICINES.md
-└── members/
-    ├── maxim/
-    │   ├── PROFILE.md
-    │   ├── BASELINE.md
-    │   ├── GOALS.md
-    │   ├── MEDICAL_HISTORY.md
-    │   ├── DECISIONS.md
-    │   ├── reports/
-    │   └── data/
-    ├── anya/
-    │   ├── PROFILE.md
-    │   ├── BASELINE.md
-    │   ├── GOALS.md
-    │   ├── MEDICAL_HISTORY.md
-    │   ├── DECISIONS.md
-    │   ├── reports/
-    │   └── data/
-    └── bella/
-        ├── PROFILE.md
-        ├── BASELINE.md
-        ├── GOALS.md
-        ├── MEDICAL_HISTORY.md
-        ├── DECISIONS.md
-        ├── reports/
-        └── data/
-```
+Каждая личная таблица имеет одинаковую структуру вкладок:
 
-## Privacy Boundary
+- `Dashboard`
+- `Members`
+- `Measurements`
+- `Laboratory`
+- `Nutrition`
+- `Activity`
+- `Sleep`
+- `Symptoms`
+- `Medications`
+- `Supplements`
+- `Medical Events`
+- `Decisions`
+- `Goals`
+- `Attachments`
+- `Settings`
+- `Baseline Report`
+- `Current Strategy`
+- `Weekly Review`
+- `Ideas & Questions`
 
-Private family data never belongs in the System Layer.
+### Принцип
 
-The GitHub repository may contain only reusable system logic, templates, and anonymized examples.
+Личные подробные данные хранятся только в личной таблице соответствующего человека.
 
-The Google Drive layer contains all personal and medical data.
+Данные Максима не записываются в таблицу Ани или Беллы.  
+Данные Беллы анализируются как детский профиль и не обрабатываются по взрослой логике без проверки.
 
-## Identity Rule
+---
 
-At the beginning of each new chat, the user must identify:
+## 3. Family Coordination Layer
 
-- who is speaking
-- whose data is being provided
-- whose health decision is being discussed
+**Хранилище:** Google Sheets  
+**Таблица:** `Family_health`  
+**Назначение:** семейная координация без подробных медицинских данных.
 
-If this is unclear, the assistant must ask for clarification before analysis or recording.
+Вкладки семейной таблицы:
 
-## Document Responsibility
+- `Dashboard`
+- `Family Members`
+- `Open Tasks`
+- `Upcoming Checks`
+- `Recent Signals`
+- `Family Decisions`
+- `Medical Visits`
+- `Shared Resources`
+- `Attachments`
+- `Settings`
 
-Each document must answer one primary question.
+`Family_health` может содержать:
 
-| Document | Primary question |
-|---|---|
-| README.md | What is Health OS? |
-| ARCHITECTURE.md | How is the project structured? |
-| CORE_PRINCIPLES.md | What principles must the system follow? |
-| FAMILY_PROFILE.md | What is the shared family context? |
-| PROFILE.md | How should the assistant work with this user? |
-| BASELINE.md | What was the starting state? |
-| GOALS.md | What are the current goals? |
-| MEDICAL_HISTORY.md | What health-related events happened? |
-| DECISIONS.md | What decisions were made and why? |
-| SYSTEM.md | How should the assistant behave? |
-| WORKFLOW.md | How is the system used day to day? |
+- общие задачи;
+- ближайшие проверки;
+- статусы по членам семьи;
+- ссылки на личные таблицы;
+- семейные решения;
+- приёмы врачей;
+- общие ресурсы.
 
-## Single Source of Truth
+`Family_health` не должна содержать:
 
-Each type of information must be stored in exactly one primary location.
+- подробные результаты анализов;
+- подробные симптомы;
+- интимные медицинские сведения;
+- полные медицинские истории;
+- чувствительные персональные данные.
 
-Examples:
+---
 
-- Interaction preferences belong in PROFILE.md
-- Starting condition belongs in BASELINE.md
-- Medical events belong in MEDICAL_HISTORY.md
-- Strategic changes belong in DECISIONS.md
-- Daily observations belong in daily reports or structured data
+## Идентификаторы
 
-## External Knowledge Policy
-
-Health OS does not store static medical knowledge as internal truth.
-
-For medical questions, recommendations must rely on current information from reliable sources at the time of analysis.
-
-Preferred source hierarchy:
-
-1. Clinical guidelines from relevant professional societies
-2. Government clinical recommendations
-3. Systematic reviews and meta-analyses
-4. Large high-quality studies
-5. Other sources only when stronger evidence is unavailable
-
-If guidelines change, current evidence takes priority over previous conclusions.
-
-## Practical Feasibility Policy
-
-Recommendations must be practical in the family’s real conditions.
-
-The assistant must consider:
-
-- Country and city of residence
-- Availability of doctors
-- Availability of medications, supplements, products, and devices
-- Cost
-- Delivery options
-- Time and effort required
-- Family routines
-- Preferences and constraints
-
-If the preferred option is unavailable, alternatives must be offered.
-
-## Data Trust Levels
-
-### High
-
-Objective measurements:
-
-- Laboratory analyses
-- Weight measurements
-- Blood pressure
-- Instrumental examinations
-
-### Medium
-
-User-supported records:
-
-- Food photos
-- Step counter data
-- Sleep logs
-
-### Low
-
-Subjective states:
-
-- Energy
-- Mood
-- Stress
-- Pain intensity
-
-### Unclear
-
-Information with uncertain subject, context, or source.
-
-Unclear data must not be used for conclusions until clarified.
-
-## Data Lifecycle
+Используются только стабильные `member_id`:
 
 ```text
-Observation
-↓
-Clarification
-↓
-Classification
-↓
-Analysis
-↓
-Decision
-↓
-Monitoring
-↓
-Review
+maxim
+anya
+bella
+family
 ```
 
-## Versioning
+Эти идентификаторы должны использоваться во всех таблицах и отчётах.
 
-System Layer uses semantic versioning.
+---
 
-Examples:
+## Правило идентификации
 
-- 1.0.0 — first stable release
-- 1.1.0 — new compatible functionality
-- 1.1.1 — corrections and clarifications
+Каждый новый чат должен начинаться с указания, кто пишет.
 
-Family Data Layer documents may have their own versions but do not require public release numbers.
+```text
+Я: Максим
+```
 
-## Quality Criteria
+Если данные относятся к другому члену семьи:
 
-Architecture is successful if:
+```text
+Я: Максим
+Данные о: Белла
+```
 
-- Documents have clear responsibilities
-- No personal data enters GitHub
-- Family members’ data is separated
-- New users or AI systems can understand the project without chat history
-- Recommendations remain practical and safe
-- The system can scale without changing its core structure
+Если владелец данных неясен, ассистент обязан уточнить это до записи, анализа или вывода.
+
+---
+
+## Маршрутизация данных
+
+При поступлении новых данных ассистент должен определить:
+
+1. К кому относятся данные
+2. Какая таблица должна быть обновлена
+3. Какая вкладка должна быть обновлена
+4. Нужно ли обновить аналитические вкладки
+5. Нужно ли добавить семейную задачу или сигнал в `Family_health`
+
+---
+
+## Жизненный цикл данных
+
+```text
+Наблюдение
+↓
+Уточнение
+↓
+Запись в личную таблицу
+↓
+Интерпретация
+↓
+Гипотеза
+↓
+Решение
+↓
+Рекомендация
+↓
+Повторная проверка
+```
+
+---
+
+## Уровни доверия к данным
+
+### Высокий
+
+- лабораторные анализы;
+- инструментальные исследования;
+- измерения веса;
+- давление;
+- пульс;
+- данные из документов.
+
+### Средний
+
+- фото еды;
+- шаги со смартфона;
+- записи сна;
+- регулярные пользовательские наблюдения.
+
+### Низкий
+
+- ощущения;
+- настроение;
+- энергия;
+- боль без шкалы;
+- неполные воспоминания.
+
+Низкая уверенность не запрещает запись, но должна быть явно указана.
+
+---
+
+## Политика медицинских знаний
+
+Проект не хранит устаревающие медицинские правила как постоянную истину.
+
+Если вопрос касается лечения, препаратов, дозировок, противопоказаний, обследований или медицинских рисков, ассистент должен использовать актуальные надёжные источники на момент ответа.
+
+---
+
+## Критерии качества архитектуры
+
+Архитектура считается рабочей, если:
+
+- личные данные не попадают в GitHub;
+- данные разных членов семьи не смешиваются;
+- личные таблицы имеют одинаковую структуру;
+- семейная таблица остаётся координационной;
+- новые данные можно быстро записать в правильное место;
+- любое решение можно связать с исходными данными;
+- систему можно использовать без чтения всей истории чата.
