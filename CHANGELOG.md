@@ -1,10 +1,15 @@
 # CHANGELOG.md
 
-## 1.0.0-rc1
+## 1.0.0 — 2026-06-26
 
-Initial release candidate:
+Рабочая версия проекта.
 
-- Added project README
-- Added architecture specification
-- Added core principles
-- Added public template structure
+Изменения:
+
+- Актуализирована архитектура под модель Google Sheets
+- Добавлена инструкция по развёртыванию `docs/DEPLOYMENT.md`
+- Добавлена инструкция по использованию `docs/USAGE.md`
+- Добавлен мастер-промт `docs/MASTER_PROMPT.md`
+- Обновлён `README.md`
+- Удалены устаревшие Markdown-шаблоны личных файлов и отчётов
+- Зафиксирована модель из четырёх таблиц: три личные таблицы и одна семейная таблица
