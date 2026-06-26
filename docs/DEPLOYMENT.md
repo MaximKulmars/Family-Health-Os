@@ -1,18 +1,18 @@
 # DEPLOYMENT.md
 
-> Версия: 1.0.0  
-> Статус: рабочая версия  
-> Тип документа: инструкция по развёртыванию
+> Version: 1.0.0  
+> Status: Working version  
+> Document type: Deployment guide
 
 ---
 
-## Назначение
+## Purpose
 
-Этот документ описывает, как развернуть Family Health OS с нуля.
+This document explains how to deploy **Family Health OS** from scratch.
 
-Цель развёртывания — получить рабочую систему из личных Google Sheets, семейной Google Sheets и ChatGPT-проекта, который работает по спецификациям из GitHub.
+The goal is to create a working system consisting of personal Google Sheets, one family coordination Google Sheet, and a ChatGPT project that follows the specifications stored in GitHub.
 
-Репозиторий проекта:
+Project repository:
 
 ```text
 https://github.com/MaximKulmars/Family-Health-Os
@@ -20,17 +20,17 @@ https://github.com/MaximKulmars/Family-Health-Os
 
 ---
 
-## Шаг 1. Создать личные таблицы
+## Step 1. Create personal spreadsheets
 
-Создайте по одной Google Sheets на каждого члена семьи.
+Create one Google Sheet for each family member.
 
-Рекомендуемая схема именования:
+Recommended naming pattern:
 
 ```text
-<Имя>_health
+<Name>_health
 ```
 
-Пример:
+Example:
 
 ```text
 Maxim_health
@@ -38,27 +38,27 @@ Anya_health
 Bella_health
 ```
 
-Личные таблицы используются для подробных данных конкретного человека.
+Personal spreadsheets are used for detailed data about one specific person.
 
 ---
 
-## Шаг 2. Создать семейную таблицу
+## Step 2. Create the family spreadsheet
 
-Создайте отдельную таблицу:
+Create a separate Google Sheet:
 
 ```text
 Family_health
 ```
 
-Она используется только для координации: общие задачи, статусы, ближайшие проверки, семейные решения и ссылки на личные таблицы.
+This table is used only for coordination: shared tasks, statuses, upcoming checks, family decisions, shared resources, and links to personal tables.
 
-Подробные медицинские данные в семейной таблице не хранятся.
+Detailed medical data must not be stored in the family table.
 
 ---
 
-## Шаг 3. Создать вкладки личной таблицы
+## Step 3. Create worksheets in each personal spreadsheet
 
-В каждой личной таблице создайте одинаковые вкладки:
+Each personal spreadsheet must contain the same worksheets:
 
 ```text
 Dashboard
@@ -84,9 +84,9 @@ Ideas & Questions
 
 ---
 
-## Шаг 4. Создать вкладки семейной таблицы
+## Step 4. Create worksheets in the family spreadsheet
 
-В `Family_health` создайте вкладки:
+`Family_health` must contain these worksheets:
 
 ```text
 Dashboard
@@ -103,11 +103,11 @@ Settings
 
 ---
 
-## Шаг 5. Настроить идентификаторы
+## Step 5. Configure identifiers
 
-Используйте стабильные `member_id`.
+Use stable `member_id` values.
 
-Пример:
+Example:
 
 ```text
 maxim
@@ -116,44 +116,44 @@ bella
 family
 ```
 
-Один человек — один стабильный идентификатор во всех таблицах.
+One person must have one stable identifier across all tables.
 
 ---
 
-## Шаг 6. Настроить ChatGPT-проект
+## Step 6. Configure the ChatGPT project
 
-В инструкции ChatGPT-проекта вставьте содержимое файла:
+Add the contents of this file to the ChatGPT project instructions:
 
 ```text
 docs/MASTER_PROMPT.md
 ```
 
-Инструкция должна ссылаться на этот репозиторий как на источник спецификаций.
+The instruction must reference this repository as the source of project specifications.
 
 ---
 
-## Шаг 7. Проверить запуск
+## Step 7. Test the setup
 
-Отправьте тестовое сообщение:
+Send a test message:
 
 ```text
 Я: Максим
 Вес сегодня 93 кг
 ```
 
-Ассистент должен определить:
+The assistant should identify:
 
-1. Кому принадлежат данные
-2. Какая личная таблица нужна
-3. Какая вкладка нужна
-4. Нужно ли обновить аналитику или семейные задачи
+1. Who the data belongs to
+2. Which personal spreadsheet should be used
+3. Which worksheet should be updated
+4. Whether analytics or family tasks should be updated
 
 ---
 
-## Принцип приватности
+## Privacy principle
 
-GitHub содержит систему и документацию.
+GitHub contains the system and documentation.
 
-Google Sheets содержат рабочие данные.
+Google Sheets contain operational data.
 
-Персональные и медицинские данные нельзя сохранять в GitHub.
+Personal and medical data must not be stored in GitHub.
