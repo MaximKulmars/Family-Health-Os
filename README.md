@@ -1,117 +1,117 @@
 # Family Health OS
 
-> Версия: 1.0.0  
-> Статус: рабочая версия  
-> Язык проекта: русский
+> Version: 1.0.0  
+> Status: Working version  
+> Primary repository language: English
 
-**Family Health OS** — семейная система мониторинга здоровья и поддержки решений на базе ChatGPT, Google Sheets и публичных спецификаций в GitHub.
+**Family Health OS** is a family health monitoring and decision-support system built around ChatGPT, Google Sheets, and public system specifications stored in GitHub.
 
-Проект помогает:
+The project helps a family:
 
-- вести структурированные данные о здоровье членов семьи;
-- отслеживать питание, активность, сон, симптомы, лекарства, БАДы и анализы;
-- готовить ежедневные, недельные и месячные разборы;
-- фиксировать решения и причины этих решений;
-- отделять факты от гипотез;
-- принимать более объяснимые и практически выполнимые решения.
+- Collect structured health-related data
+- Track nutrition, activity, sleep, symptoms, medications, supplements, laboratory results, and medical events
+- Prepare daily, weekly, and monthly reviews
+- Record decisions and the reasons behind them
+- Separate facts, interpretations, hypotheses, decisions, and recommendations
+- Keep private health data out of the public repository
 
-Проект не заменяет врача, не ставит диагнозы и не предназначен для назначения рецептурного лечения.
+Family Health OS is not a diagnostic system, not a medical record system, and not a replacement for medical professionals.
 
 ---
 
-## Архитектура хранения
+## Storage model
 
-Проект разделён на две части.
+The project is split into two layers.
 
 ### 1. GitHub
 
-В GitHub хранятся только публичные системные материалы:
+GitHub stores only reusable, non-personal system materials:
 
-- архитектура;
-- спецификации;
-- инструкции по развёртыванию;
-- инструкции по использованию;
-- мастер-промт;
-- документация проекта.
+- Architecture
+- Specifications
+- Deployment instructions
+- Usage instructions
+- Project prompt
+- Public documentation
 
-В GitHub нельзя хранить персональные и медицинские данные.
+GitHub must never contain personal or medical data.
 
 ### 2. Google Sheets
 
-Google Sheets используются как рабочая база данных.
+Google Sheets are used as the operational data layer.
 
-Базовая модель предполагает четыре таблицы:
+The default setup uses four spreadsheets:
 
-- `Maxim_health` — личная таблица Максима;
-- `Anya_health` — личная таблица Ани;
-- `Bella_health` — личная таблица Беллы;
-- `Family_health` — семейная координационная таблица.
+- `Maxim_health` — personal table for Maxim
+- `Anya_health` — personal table for Anya
+- `Bella_health` — personal child table for Bella
+- `Family_health` — family coordination dashboard
 
-Личные таблицы содержат подробные персональные данные.  
-`Family_health` содержит только общие задачи, статусы, ближайшие проверки, семейные решения и ссылки на личные таблицы.
-
----
-
-## Основные документы
-
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — архитектура системы
-- [`docs/CORE_PRINCIPLES.md`](docs/CORE_PRINCIPLES.md) — базовые принципы
-- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — развёртывание проекта
-- [`docs/USAGE.md`](docs/USAGE.md) — ежедневное использование
-- [`docs/MASTER_PROMPT.md`](docs/MASTER_PROMPT.md) — короткая инструкция для ChatGPT-проекта
+Personal tables contain detailed private data.  
+`Family_health` contains only family-level coordination: tasks, statuses, upcoming checks, shared decisions, resources, and links to personal tables.
 
 ---
 
-## Быстрый старт
+## Documentation
 
-1. Создайте четыре Google Sheets:
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system architecture
+- [`docs/CORE_PRINCIPLES.md`](docs/CORE_PRINCIPLES.md) — core principles
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — deployment guide in English
+- [`docs/ru/DEPLOYMENT.md`](docs/ru/DEPLOYMENT.md) — deployment guide in Russian
+- [`docs/USAGE.md`](docs/USAGE.md) — daily usage guide
+- [`docs/MASTER_PROMPT.md`](docs/MASTER_PROMPT.md) — compact ChatGPT project instruction
+
+---
+
+## Quick start
+
+1. Create four Google Sheets:
    - `Maxim_health`
    - `Anya_health`
    - `Bella_health`
    - `Family_health`
 
-2. Разверните структуру вкладок по инструкции из `docs/DEPLOYMENT.md`.
+2. Create the required worksheets using [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) or [`docs/ru/DEPLOYMENT.md`](docs/ru/DEPLOYMENT.md).
 
-3. Добавьте `docs/MASTER_PROMPT.md` в инструкции ChatGPT-проекта.
+3. Add [`docs/MASTER_PROMPT.md`](docs/MASTER_PROMPT.md) to the ChatGPT project instructions.
 
-4. В начале каждого нового чата указывайте, кто пишет:
+4. Start each new chat by identifying the speaker:
 
 ```text
 Я: Максим
 ```
 
-Если данные относятся к другому члену семьи:
+If the data is about another family member:
 
 ```text
 Я: Максим
 Данные о: Белла
 ```
 
-5. Присылайте данные в течение дня: еду, активность, сон, симптомы, лекарства, БАДы, анализы и вопросы.
+5. Send daily data to the assistant: food, activity, sleep, symptoms, medications, supplements, laboratory results, and questions.
 
 ---
 
-## Принцип работы
+## Decision cycle
 
-Главный цикл системы:
+The system follows this logic:
 
 ```text
-Данные → интерпретация → гипотеза → решение → рекомендация
+Data → Interpretation → Hypothesis → Decision → Recommendation
 ```
 
-Health OS не должен быть генератором случайных советов. Каждая рекомендация должна быть связана с данными, а каждое решение должно быть понятно через несколько месяцев.
+Family Health OS should not generate isolated advice. Every recommendation must be connected to data, and every important decision must remain explainable later.
 
 ---
 
-## Приватность
+## Privacy rule
 
-Персональные данные не должны попадать в GitHub.
+Personal data must not be stored in GitHub.
 
-В репозитории допустимы только:
+The repository may contain only:
 
-- пустые схемы;
-- обезличенные примеры;
-- инструкции;
-- спецификации;
-- документация.
-
+- Empty schemas
+- Anonymized examples
+- Instructions
+- Specifications
+- Documentation
