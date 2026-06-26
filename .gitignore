@@ -1,0 +1,10 @@
+# Private Family Data Layer
+FAMILY_PROFILE.md
+family/
+shared/
+members/
+
+# Local files
+*.zip
+.DS_Store
+Thumbs.db
