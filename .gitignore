@@ -8,3 +8,12 @@ members/
 *.zip
 .DS_Store
 Thumbs.db
+
+# Public templates are allowed
+!templates/
+!templates/family/
+!templates/family/**
+!templates/member/
+!templates/member/**
+!templates/reports/
+!templates/reports/**
