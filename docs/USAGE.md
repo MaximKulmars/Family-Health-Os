@@ -1,172 +1,172 @@
 # USAGE.md
 
-> Версия: 1.0.0  
-> Статус: рабочая версия  
-> Тип документа: инструкция по использованию
+> Version: 1.0.0  
+> Status: Working version  
+> Document type: Usage guide
 
 ---
 
-## Назначение
+## Purpose
 
-Этот документ описывает ежедневную работу с Family Health OS.
+This document describes day-to-day usage of **Family Health OS**.
 
-Главная идея: пользователь присылает данные в чат, а ассистент определяет, куда их записать, как интерпретировать и нужно ли обновить стратегию, задачи или семейную панель.
+The main workflow is simple: the user sends data to the assistant, and the assistant determines where to record it, how to interpret it, and whether strategy, tasks, or the family dashboard need to be updated.
 
 ---
 
-## Начало нового чата
+## Starting a new chat
 
-Каждый новый чат начинается с идентификации.
+Each new chat starts with identification.
 
 ```text
 Я: Максим
 ```
 
-Если данные относятся к другому члену семьи:
+If the data is about another family member:
 
 ```text
 Я: Максим
 Данные о: Белла
 ```
 
-Если владелец данных неясен, ассистент должен сначала уточнить его.
+If the owner of the data is unclear, the assistant must ask first.
 
 ---
 
-## Что можно отправлять в течение дня
+## What can be sent during the day
 
-Можно отправлять:
+The user may send:
 
-- еду и фото еды;
-- вес, талию, давление, пульс;
-- шаги, прогулки, упражнения;
-- сон;
-- симптомы и жалобы;
-- лекарства;
-- БАДы;
-- анализы;
-- медицинские события;
-- вопросы и идеи.
-
----
-
-## Как ассистент обрабатывает данные
-
-Для каждой новой информации ассистент определяет:
-
-1. Члена семьи
-2. Личную или семейную таблицу
-3. Конкретную вкладку
-4. Уровень уверенности
-5. Нужно ли обновить аналитику
-6. Нужно ли добавить задачу или сигнал в `Family_health`
+- Food descriptions and food photos
+- Weight, waist circumference, blood pressure, pulse
+- Steps, walks, exercises
+- Sleep information
+- Symptoms and complaints
+- Medications
+- Supplements
+- Laboratory results
+- Medical events
+- Questions and ideas
 
 ---
 
-## Основные направления записи
+## How the assistant processes data
 
-### Личные таблицы
+For every new piece of information, the assistant determines:
 
-- Еда → `Nutrition`
-- Вес, талия, давление, пульс → `Measurements`
-- Шаги, прогулки, упражнения → `Activity`
-- Сон → `Sleep`
-- Симптомы → `Symptoms`
-- Лекарства → `Medications`
-- БАДы → `Supplements`
-- Анализы → `Laboratory`
-- Медицинские события → `Medical Events`
-- Решения → `Decisions`
-- Цели → `Goals`
-- Файлы → `Attachments`
-- Вопросы и гипотезы → `Ideas & Questions`
-- Текущие выводы → `Baseline Report`
-- Текущий план → `Current Strategy`
-- Недельные итоги → `Weekly Review`
-
-### Семейная таблица
-
-- Общие задачи → `Open Tasks`
-- Ближайшие проверки → `Upcoming Checks`
-- Важные сигналы → `Recent Signals`
-- Семейные решения → `Family Decisions`
-- Приёмы врачей → `Medical Visits`
-- Общие ресурсы → `Shared Resources`
+1. Family member
+2. Personal or family spreadsheet
+3. Specific worksheet
+4. Data confidence level
+5. Whether analytical sections should be updated
+6. Whether a task or signal should be added to `Family_health`
 
 ---
 
-## Ежедневный режим
+## Main routing rules
 
-В течение дня данные записываются в соответствующие вкладки.
+### Personal tables
 
-В конце дня можно запросить итог:
+- Food → `Nutrition`
+- Weight, waist circumference, blood pressure, pulse → `Measurements`
+- Steps, walks, exercises → `Activity`
+- Sleep → `Sleep`
+- Symptoms → `Symptoms`
+- Medications → `Medications`
+- Supplements → `Supplements`
+- Laboratory results → `Laboratory`
+- Medical events → `Medical Events`
+- Decisions → `Decisions`
+- Goals → `Goals`
+- Files → `Attachments`
+- Questions and hypotheses → `Ideas & Questions`
+- Current conclusions → `Baseline Report`
+- Current plan → `Current Strategy`
+- Weekly summaries → `Weekly Review`
+
+### Family table
+
+- Shared tasks → `Open Tasks`
+- Upcoming checks → `Upcoming Checks`
+- Important signals → `Recent Signals`
+- Family decisions → `Family Decisions`
+- Medical visits → `Medical Visits`
+- Shared resources → `Shared Resources`
+
+---
+
+## Daily workflow
+
+During the day, data is recorded in the relevant worksheets.
+
+At the end of the day, the user may request a daily summary:
 
 ```text
 Подведи итог дня
 ```
 
-В итог входят:
+The daily summary may include:
 
-- питание;
-- примерная калорийность, если данных достаточно;
-- активность;
-- сон;
-- симптомы;
-- лекарства и БАДы;
-- что получилось хорошо;
-- что стоит изменить;
-- фокус на завтра.
-
----
-
-## Недельный режим
-
-Раз в неделю обновляется `Weekly Review`.
-
-Проверяются:
-
-- питание;
-- активность;
-- сон;
-- симптомы;
-- измерения;
-- выполнение текущей стратегии;
-- открытые задачи;
-- решения на следующую неделю.
+- Nutrition
+- Estimated calories if data is sufficient
+- Activity
+- Sleep
+- Symptoms
+- Medications and supplements
+- What went well
+- What should be changed
+- Focus for tomorrow
 
 ---
 
-## Месячный режим
+## Weekly workflow
 
-Раз в месяц пересматриваются:
+Once a week, `Weekly Review` is updated.
 
-- `Baseline Report`;
-- `Current Strategy`;
-- `Goals`;
-- `Decisions`;
-- лабораторные данные;
-- открытые вопросы;
-- семейные задачи.
+The review checks:
 
----
-
-## Как отвечать пользователю
-
-Обычно достаточно короткого ответа:
-
-1. Что записано
-2. Куда записано
-3. Что это значит
-4. Что делать дальше
-
-Не нужно перегружать пользователя длинными объяснениями, если он их не просит.
+- Nutrition
+- Activity
+- Sleep
+- Symptoms
+- Measurements
+- Current strategy execution
+- Open tasks
+- Decisions for the next week
 
 ---
 
-## Медицинская безопасность
+## Monthly workflow
 
-Ассистент не ставит диагнозы и не заменяет врача.
+Once a month, the system reviews:
 
-Если вопрос касается лечения, лекарств, дозировок, противопоказаний, обследований или медицинских рисков, нужно использовать актуальную проверку информации.
+- `Baseline Report`
+- `Current Strategy`
+- `Goals`
+- `Decisions`
+- Laboratory data
+- Open questions
+- Family tasks
 
-Если есть потенциально опасные симптомы, нужно прямо рекомендовать медицинскую помощь.
+---
+
+## Response style
+
+A typical response should be short:
+
+1. What was recorded
+2. Where it was recorded
+3. What it means
+4. What to do next
+
+Do not overload the user with long explanations unless asked.
+
+---
+
+## Medical safety
+
+The assistant does not diagnose and does not replace a physician.
+
+If a question involves treatment, medications, dosages, contraindications, investigations, or medical risks, the assistant must use current information.
+
+If there are potentially dangerous symptoms, the assistant must directly recommend medical care.
