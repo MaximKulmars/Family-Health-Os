@@ -2,7 +2,8 @@
 
 > Version: 1.0.0  
 > Status: Working version  
-> Primary repository language: English
+> Primary repository language: English  
+> Russian deployment guide: [`docs/ru/DEPLOYMENT.md`](docs/ru/DEPLOYMENT.md)
 
 **Family Health OS** is a family health monitoring and decision-support system built around ChatGPT, Google Sheets, and public system specifications stored in GitHub.
 
@@ -16,6 +17,31 @@ The project helps a family:
 - Keep private health data out of the public repository
 
 Family Health OS is not a diagnostic system, not a medical record system, and not a replacement for medical professionals.
+
+---
+
+## Русская версия
+
+**Family Health OS** — семейная система мониторинга здоровья и поддержки решений на базе ChatGPT и Google Sheets.
+
+Система помогает вести данные о здоровье членов семьи, отслеживать питание, активность, сон, симптомы, лекарства, БАДы, анализы, медицинские события, решения и задачи.
+
+Основная логика проекта:
+
+```text
+Данные → интерпретация → гипотеза → решение → рекомендация
+```
+
+Репозиторий содержит только публичную системную часть проекта: архитектуру, спецификации, инструкции и документацию. Персональные и медицинские данные в GitHub хранить нельзя.
+
+Рабочие данные хранятся в Google Sheets:
+
+- личные таблицы членов семьи;
+- отдельная семейная таблица для общих задач, статусов и ближайших проверок.
+
+Инструкция по установке и развёртыванию на русском языке находится здесь:
+
+- [`docs/ru/DEPLOYMENT.md`](docs/ru/DEPLOYMENT.md)
 
 ---
 
